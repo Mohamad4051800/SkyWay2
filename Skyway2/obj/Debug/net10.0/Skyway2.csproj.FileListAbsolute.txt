@@ -169,3 +169,4 @@ E:\RiderProjects\Skyway2\Skyway2\obj\Debug\net10.0\refint\Skyway2.dll
 E:\RiderProjects\Skyway2\Skyway2\obj\Debug\net10.0\Skyway2.pdb
 E:\RiderProjects\Skyway2\Skyway2\obj\Debug\net10.0\Skyway2.genruntimeconfig.cache
 E:\RiderProjects\Skyway2\Skyway2\obj\Debug\net10.0\ref\Skyway2.dll
+E:\RiderProjects\Skyway2\Skyway2\obj\Debug\net10.0\Skyway2.sourcelink.json

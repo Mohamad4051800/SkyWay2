@@ -280,4 +280,89 @@ public class PassengerRepository(
 
     return response;
 }
+public async Task<Response<PassengerDto>> GetMyProfile(string userId)
+{
+    var response = new Response<PassengerDto>();
+
+    try
+    {
+        var passenger = await _passenger.Passengers
+            .Include(p => p.ApplicationUser)
+            .FirstOrDefaultAsync(p => p.ApplicationUserId == userId);
+
+        if (passenger == null)
+        {
+            response.statusCode = 404;
+            response.message = "پروفایل مسافر یافت نشد";
+            response.messageLevel = MessageLevel.Admin;
+            return response;
+        }
+
+        response.payload = new PassengerDto
+        {
+            PassengerId = passenger.PassengerId,
+            FirstName = passenger.ApplicationUser.FirstName,
+            LastName = passenger.ApplicationUser.LastName,
+            Email = passenger.ApplicationUser.Email!,
+            PhoneNumber = passenger.ApplicationUser.PhoneNumber!,
+            DateOfBirth = passenger.DateOfBirth,
+            NationalCode = passenger.NationalCode
+        };
+
+        response.statusCode = 200;
+        response.message = "اطلاعات پروفایل با موفقیت دریافت شد";
+        response.messageLevel = MessageLevel.Admin;
+    }
+    catch (Exception ex)
+    {
+        response.statusCode = 500;
+        response.message = "خطا در دریافت پروفایل";
+        response.devMessage = ex.Message;
+        response.messageLevel = MessageLevel.Admin;
+    }
+
+    return response;
+}
+public async Task<Response<bool>> UpdateMyProfile(
+    string userId,
+    UpdatePassengerDto passengerDto)
+{
+    var response = new Response<bool>
+    {
+        payload = false
+    };
+
+    try
+    {
+        var passenger = await _passenger.Passengers
+            .FirstOrDefaultAsync(p => p.ApplicationUserId == userId);
+
+        if (passenger == null)
+        {
+            response.statusCode = 404;
+            response.message = "پروفایل مسافر یافت نشد";
+            response.messageLevel = MessageLevel.Admin;
+            return response;
+        }
+
+        passenger.DateOfBirth = passengerDto.DateOfBirth;
+        passenger.NationalCode = passengerDto.NationalCode;
+
+        await _passenger.SaveChangesAsync();
+
+        response.payload = true;
+        response.statusCode = 200;
+        response.message = "پروفایل با موفقیت بروزرسانی شد";
+        response.messageLevel = MessageLevel.Admin;
+    }
+    catch (Exception ex)
+    {
+        response.statusCode = 500;
+        response.message = "خطا در بروزرسانی پروفایل";
+        response.devMessage = ex.Message;
+        response.messageLevel = MessageLevel.Admin;
+    }
+
+    return response;
+}
 }

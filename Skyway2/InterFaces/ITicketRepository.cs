@@ -7,6 +7,6 @@ public interface ITicketRepository
 {
     public Task <Response<List<TicketDto>>>  GetTickets();
     public Task<Response<List<TicketDto>>>  GetTicketsByDate(DateOnly date);
-    public Task<Response<List<TicketDto>>> GetPassengerTickets(int passengerId);
+    public Task<Response<List<TicketDto>>> GetPassengerTickets(string userId);
 
 }

@@ -78,14 +78,14 @@ public class TicketRepository(AppDbContext _ticket) : ITicketRepository
         return response;
     }
 
-    public async Task<Response<List<TicketDto>>> GetPassengerTickets(int passengerId)
+    public async Task<Response<List<TicketDto>>> GetPassengerTickets(string userId)
     {
         var response = new Response<List<TicketDto>>();
 
         try
         {
             var tickets = await _ticket.Tickets
-                .Where(t => t.Order.PassengerId == passengerId)
+                .Where(t => t.Order.Passenger.ApplicationUserId== userId)
                 .Select(t => new TicketDto
                 {
                     TicketId = t.TicketId,

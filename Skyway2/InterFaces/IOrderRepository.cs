@@ -5,7 +5,11 @@ namespace Skyway2.InterFaces;
 
 public interface IOrderRepository
 {
-    public Task<Response<int>> CreateOrder(CreateOrderDto orderDto);
+    public Task<Response<int>> CreateOrder(string userId, CreateOrderDto orderDto);
     public Task<Response<bool>> ConfirmOrderPayment(ConfirmOrderPaymentDto dto);
+    Task<Response<List<OrderDto>>> GetAllOrders();
 
+    Task<Response<OrderDto>> GetOrderById(int orderId);
+
+    Task<Response<List<OrderDto>>> GetMyOrders(string userId);
 }

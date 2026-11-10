@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Skyway2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+827e6917d600897b81c122e29c6472cc9b106813")]
 [assembly: System.Reflection.AssemblyProductAttribute("Skyway2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Skyway2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

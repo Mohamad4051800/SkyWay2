@@ -11,5 +11,10 @@ public interface IPassengerRepository
    // public Task<Response<int>>CreatePassenger(CreatePassengerDto passengerDto);
     public Task<Response<bool>> UpdatePassenger(int PassengerId, UpdatePassengerDto  passengerDto);
     public Task<Response<bool>> DeletePassenger(int PassengerId);
+    public Task<Response<PassengerDto>> GetMyProfile(string userId);
+
+    public Task<Response<bool>> UpdateMyProfile(
+        string userId,
+        UpdatePassengerDto passengerDto);
 
 }

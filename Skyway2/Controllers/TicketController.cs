@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Skyway2.InterFaces;
 
 namespace Skyway2.Controllers;
@@ -7,13 +9,14 @@ namespace Skyway2.Controllers;
 [Route("api/[controller]")]
 public class TicketController(ITicketRepository _ticket) : ControllerBase
 {
+    [Authorize(Roles = "Admin")]
     [HttpGet("GetTickets")]
     public async Task<IActionResult> GetTickets()
     {
         var response = await _ticket.GetTickets();
         return StatusCode(response.statusCode, response);
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpGet("GetTicketsByDate")]
     public async Task<IActionResult> GetTicketsByDate([FromQuery] DateOnly date)
     {
@@ -21,10 +24,17 @@ public class TicketController(ITicketRepository _ticket) : ControllerBase
         return StatusCode(response.statusCode, response);
     }
 
-    [HttpGet("GetPassengerTickets/{passengerId}")]
-    public async Task<IActionResult> GetPassengerTickets(int passengerId)
+    [HttpGet("GetPassengerTickets")]
+    [Authorize(Roles = "Passenger")]
+    public async Task<IActionResult> GetPassengerTickets()
     {
-        var response = await _ticket.GetPassengerTickets(passengerId);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+            return Unauthorized();
+
+        var response = await _ticket.GetPassengerTickets(userId);
+
         return StatusCode(response.statusCode, response);
     }
 }
